@@ -327,7 +327,7 @@ fromFoldable = foldr cons empty
 
 -- | Probably O(n), but depends on the Unfoldable instance. Turn a `Seq` into
 -- | any `Unfoldable`.
-toUnfoldable :: forall f. (Functor f, Unfoldable f) => Seq ~> f
+toUnfoldable :: forall f. Functor f => Unfoldable f => Seq ~> f
 toUnfoldable (Seq xs) = mapGetElem (FT.unfoldLeft xs)
 
 -- | O(n). Create a new Seq which contains only those elements of the input

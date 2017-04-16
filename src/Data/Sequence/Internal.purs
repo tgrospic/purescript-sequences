@@ -25,13 +25,13 @@ import Unsafe.Coerce (unsafeCoerce)
 -----------------------
 -- Various utilities
 
-mapmap :: forall f g a b. (Functor f, Functor g) =>
+mapmap :: forall f g a b. Functor f => Functor g =>
   (a -> b) -> f (g a) -> f (g b)
 mapmap = (<$>) <<< (<$>)
 
 infix 2 mapmap as <$$>
 
-mapmapmap :: forall f g h a b. (Functor f, Functor g, Functor h) =>
+mapmapmap :: forall f g h a b. Functor f => Functor g => Functor h =>
   (a -> b) -> f (g (h a)) -> f (g (h b))
 mapmapmap = (<$$>) <<< (<$>)
 

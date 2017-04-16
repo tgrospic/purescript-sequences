@@ -151,11 +151,11 @@ abs x = if x < 0 then (-x) else x
 integerBetween :: Int -> Int -> Int -> Int
 integerBetween lo hi x = (abs x `mod` hi - lo) + lo
 
-sorted :: forall a. (Show a, Ord a) => Array a -> Result
+sorted :: forall a. Show a => Ord a => Array a -> Result
 sorted xs = xs == A.sort xs
               <?> show xs <> " is not sorted."
 
-sortedRev :: forall a. (Show a, Ord a) => Array a -> Result
+sortedRev :: forall a. Show a => Ord a => Array a -> Result
 sortedRev xs = xs == A.reverse (A.sort xs)
                 <?> show xs <> " is not sorted in reverse order."
 
@@ -191,7 +191,7 @@ maybeAppend' Nothing y = y
 maybeAppend' x Nothing = x
 maybeAppend' x y       = append <$> x <*> y
 
-foldableMinimum :: forall f a. (Ord a, Foldable f) => f a -> Maybe a
+foldableMinimum :: forall f a. Ord a => Foldable f => f a -> Maybe a
 foldableMinimum = map runMin <<< foldr (maybeAppend' <<< Just <<< Min) Nothing
 
 newtype Max a = Max a
@@ -212,7 +212,7 @@ instance semigroupMax :: (Ord a) => Semigroup (Max a) where
       EQ -> a
       GT -> a
 
-foldableMaximum :: forall f a. (Ord a, Foldable f) => f a -> Maybe a
+foldableMaximum :: forall f a. Ord a => Foldable f => f a -> Maybe a
 foldableMaximum = map runMax <<< foldr (maybeAppend' <<< Just <<< Max) Nothing
 
 -------------------------------------------------------------------------------
